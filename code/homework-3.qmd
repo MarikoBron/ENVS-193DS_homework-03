@@ -1,0 +1,16 @@
+---
+title: "homework-3"
+date: 05-22-2025
+author: Mariko Bronson
+format: html
+---
+
+https://github.com/MarikoBron/ENVS-193DS_homework-03.git
+
+```{r packages}
+library(tidyverse)
+library(here)
+library(janitor)
+library(flextable)
+```
+
