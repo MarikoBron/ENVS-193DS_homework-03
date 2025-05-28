@@ -12,5 +12,17 @@ library(tidyverse)
 library(here)
 library(janitor)
 library(flextable)
+library(readxl)
 ```
 
+#Problem 1: Personal Data
+
+## a. Data Summarizing
+
+I am adding together five quantitative variables to calculate my perceived daily stress level, including the number of classes skipped, number of assignments/tasks due, number of assignments/tasks done, number of plans cancelled, and number of hours slept. I am comparing this daily self-imposed stress value to my daily screentime to look for correlations between the two values because sometimes I feel like high perceived stress pushes me to use my phone more to avoid tasks.
+
+## b. Visualization
+
+# Problem 3
+
+## a.
