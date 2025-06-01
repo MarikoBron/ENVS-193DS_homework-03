@@ -16,6 +16,7 @@ library(flextable)
 library(readxl)
 library(ggplot2)
 library(colorspace)
+library(dplyr)
 
 #create object screentime
 screentime <- read_xlsx(
@@ -66,7 +67,7 @@ ggplot(screentime_clean,
   ) +
   
   labs(
-    title = "Relationship Between Screentime, Perceived Stress Value,\nand Number of Tasks Due- Screentime increases as \nTasks Decrease",
+    title = "Relationship Between Screentime, Perceived Stress Value,\nand Number of Tasks Due",
     x = "Stress Value",
     y = "Screentime (h)",
     color = "Tasks Due"
@@ -80,6 +81,30 @@ ggplot(screentime_clean,
 ## c. Caption
 
 There is no obvious correlation between daily perceived stress value and daily hours of screentime,but there is a correlation between number of tasks due and daily screentime. The highest daily screentime values are on days with zero tasks due, and days with more tasks due appear to have lower screentime. Perceived stress value is calculated by adding up point values for the daily number of classes skipped, tasks due, plans cancelled, and a point is also added for every hour of sleep that is less than eight. Points are subtracted for every task completed and for every hour of sleep that exceeds eight.
+
+## d. Table Presentation
+
+```{r table}
+
+colnames(screentime_clean)
+head(screentime_clean[["tasks due"]])
+
+
+screentime_cleaner <- screentime_clean[,c("tasks due", "stress value", "screentime(h)")]
+
+
+flextable(
+  screentime_cleaner,
+  col_keys = c("tasks due", "stress value", "screentime(h)"),
+  cwidth = 2,
+  cheight = 0.25,
+  defaults = list(),
+  theme_fun = theme_booktabs,
+  use_labels = TRUE
+)
+
+```
+
 
 # Problem 3
 
