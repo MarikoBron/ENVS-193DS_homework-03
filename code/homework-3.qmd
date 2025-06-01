@@ -66,17 +66,20 @@ ggplot(screentime_clean,
   ) +
   
   labs(
-    title = "Relationship Between Screentime, Perceived Stress Value,\nand Number of Tasks Due",
+    title = "Relationship Between Screentime, Perceived Stress Value,\nand Number of Tasks Due- Screentime increases as \nTasks Decrease",
     x = "Stress Value",
     y = "Screentime (h)",
     color = "Tasks Due"
   ) +
   
-  scale_color_discrete_sequential(palette = "Sunset")
+  scale_color_discrete_sequential(palette = "SunsetDark")
 
 
 ```
 
+## c. Caption
+
+There is no obvious correlation between daily perceived stress value and daily hours of screentime,but there is a correlation between number of tasks due and daily screentime. The highest daily screentime values are on days with zero tasks due, and days with more tasks due appear to have lower screentime. Perceived stress value is calculated by adding up point values for the daily number of classes skipped, tasks due, plans cancelled, and a point is also added for every hour of sleep that is less than eight. Points are subtracted for every task completed and for every hour of sleep that exceeds eight.
 
 # Problem 3
 
