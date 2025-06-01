@@ -8,14 +8,18 @@ format: html
 https://github.com/MarikoBron/ENVS-193DS_homework-03.git
 
 ```{r packages and data}
+#install packages
 library(tidyverse)
 library(here)
 library(janitor)
 library(flextable)
 library(readxl)
+library(ggplot2)
+library(colorspace)
 
+#create object screentime
 screentime <- read_xlsx(
-  here("data", "193DS_screentime_clean.xlsx"),
+  here("data", "193DS_screentime_updated.xlsx"),
   sheet = "Sheet1")
 ```
 
@@ -29,9 +33,40 @@ I am adding together five quantitative variables to calculate my perceived daily
 
 ```{creating a visualization}
 
-screentime_clean <- screentime |> 
-  clean_names()
-
+screentime_clean <- screentime |>  #create object screentime_clean
+  clean_names() |> 
+  select(number_classes_skipped, number_tasks_due, number_hw_assn_done_1, number_plans_cancelled, x8_number_hrs_slept, stress_value, screen_time_h) |> 
+  rename( 
+        `classes skipped` = number_classes_skipped ,
+        `tasks due` = number_tasks_due,
+        `assignments completed` = number_hw_assn_done_1,
+        `plans cancelled` = number_plans_cancelled,
+        `hours slept` = x8_number_hrs_slept,
+        `stress value` = stress_value,
+        `screentime(h)` = screen_time_h #renaming all of my columns
+         )
+hcl_palettes() #downloading cute color palette just in case I need it
+ggplot(screentime_clean, 
+       aes(
+         x = `stress value`,
+         y = `screentime(h)`,
+         color = `tasks due`
+       )) + #create scatterplot to look for correlation between stress value and screentime (there is lowkey none)
+  geom_point(
+    color = "darkslateblue",
+    fill = "mediumpurple", 
+    shape = 23,
+    alpha = 0.6,
+    size = 4,
+    stroke = 1.5 #make scatterplot cute
+  ) +
+  
+  labs(
+    title = "Relationship Between Screentime and Perceived Stress Value",
+    x = "Stress Value",
+    y = "Screentime (h)",
+    color = "Tasks Due"
+  )
 
 ```
 
