@@ -42,12 +42,11 @@ screentime_clean <- screentime |>  #create object screentime_clean
         `tasks due` = number_tasks_due,
         `assignments completed` = number_hw_assn_done_1,
         `plans cancelled` = number_plans_cancelled,
-        `hours slept` = x8_number_hrs_slept,
+        `8 - hours slept` = x8_number_hrs_slept,
         `stress value` = stress_value,
         `screentime(h)` = screen_time_h #renaming all of my columns
-         )
-
-screentime_clean$`tasks due`[21] <- 1 #fixing a value i entered in wrong
+         ) |> 
+  arrange(`screentime(h)`) #arrange by increasing screentime/dependant var to loo for patterns
 
 hcl_palettes() #downloading cute color palette just in case I need it
 hcl_palettes(plot = TRUE)
@@ -70,40 +69,96 @@ ggplot(screentime_clean,
     title = "Relationship Between Screentime, Perceived Stress Value,\nand Number of Tasks Due",
     x = "Stress Value",
     y = "Screentime (h)",
-    color = "Tasks Due"
+    color = "Tasks Due" #add labels, color by tasks due
   ) +
   
-  scale_color_discrete_sequential(palette = "SunsetDark")
+  scale_color_discrete_sequential(palette = "SunsetDark") #choose color palette
+```
 
+```{testing a different visualization}
+
+screentime_altered <- screentime_clean |> 
+  mutate(`hours slept` = 8 - `8 - hours slept`) #make the hours slept variable less confusing because i am not using stress points in this version
+
+ggplot(screentime_altered, 
+       aes(
+         x = `hours slept`,
+         y = `screentime(h)`,
+         color = factor(`tasks due`)
+       )) + #create new scatterplot to look for correlation between screentime, hours slept, and tasks due
+  geom_point(
+    fill = "honeydew", 
+    shape = 23,
+    alpha = 0.6,
+    size = 3.5,
+    stroke = 3 #make scatterplot cute
+  ) +
+  
+  labs(
+    title = "Negative Relationship Between Screentime and Hours Slept\nand Between Screentime and Number of Tasks Due",
+    x = "Hours Slept",
+    y = "Screentime (h)",
+    color = "Tasks Due" #add labels
+  ) +
+  
+   geom_jitter(
+height = 0.15, 
+width = 0,
+shape = 23,
+alpha = 0.6,
+size = 3.5, 
+stroke = 3) + #adding jitter because I realized half of my data is hidden
+  
+  scale_color_discrete_sequential(palette = "SunsetDark") #choose colors
 
 ```
 
+
 ## c. Caption
 
-There is no obvious correlation between daily perceived stress value and daily hours of screentime,but there is a correlation between number of tasks due and daily screentime. The highest daily screentime values are on days with zero tasks due, and days with more tasks due appear to have lower screentime. Perceived stress value is calculated by adding up point values for the daily number of classes skipped, tasks due, plans cancelled, and a point is also added for every hour of sleep that is less than eight. Points are subtracted for every task completed and for every hour of sleep that exceeds eight.
+Figure 1: Daily screentime appears to decrease on days with more responsibilities and proper sleep.
+
+Daily screentime(h) obtained from "screentime" feature on iPhone. Daily sleep(h) estimated from last time picking up phone every night and first time every morning. Tasks due recorded daily, midterms and finals were counted as 2 tasks each. Points were recorded frpm 04/23/25 to 05/29/25 excluding 04/27 - 05/03 due to a lack of observations. Points represent daily observations of hours slept and hours of screentime (n = 30). The colors of the points transition from yellow, which represents days with zero tasks due, and darken to purple as daily tasks increase to four.
+
 
 ## d. Table Presentation
 
 ```{r table}
 
-colnames(screentime_clean)
-head(screentime_clean[["tasks due"]])
+screentime_cleaner <- screentime_altered[,c("tasks due", "hours slept", "screentime(h)")] |>  
+  arrange(`screentime(h)`) #create object with selected values, arrange my increasing screentime/dependent var
 
+set_flextable_defaults(
+  border.color = "#f8a07e",
+  background.color = "#fff5b6",
+  font.color = "#a059a0" #making table match my plot
+  )
 
-screentime_cleaner <- screentime_clean[,c("tasks due", "stress value", "screentime(h)")]
-
-
-flextable(
+#create a table with the intended columns
+screentime_cleaner_table <- flextable(
   screentime_cleaner,
-  col_keys = c("tasks due", "stress value", "screentime(h)"),
+  col_keys = c("tasks due", "hours slept", "screentime(h)"),
   cwidth = 2,
   cheight = 0.25,
   defaults = list(),
   theme_fun = theme_booktabs,
-  use_labels = TRUE
-)
+  use_labels = FALSE
+) |> 
+  set_header_labels(
+    `tasks due` = "Tasks Due",
+    `hours slept` = "Hours Slept",
+    `screentime(h)` = "Screentime(h)" #rename columns
+  ) 
+
+
+screentime_cleaner_table #view my object
 
 ```
+
+# Problem 2
+
+
+
 
 
 # Problem 3
