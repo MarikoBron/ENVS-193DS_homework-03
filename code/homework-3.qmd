@@ -45,28 +45,35 @@ screentime_clean <- screentime |>  #create object screentime_clean
         `stress value` = stress_value,
         `screentime(h)` = screen_time_h #renaming all of my columns
          )
+
+screentime_clean$`tasks due`[21] <- 1 #fixing a value i entered in wrong
+
 hcl_palettes() #downloading cute color palette just in case I need it
+hcl_palettes(plot = TRUE)
+
 ggplot(screentime_clean, 
        aes(
          x = `stress value`,
          y = `screentime(h)`,
-         color = `tasks due`
+         color = factor(`tasks due`)
        )) + #create scatterplot to look for correlation between stress value and screentime (there is lowkey none)
   geom_point(
-    color = "darkslateblue",
-    fill = "mediumpurple", 
+    fill = "honeydew", 
     shape = 23,
     alpha = 0.6,
-    size = 4,
-    stroke = 1.5 #make scatterplot cute
+    size = 3.5,
+    stroke = 3 #make scatterplot cute
   ) +
   
   labs(
-    title = "Relationship Between Screentime and Perceived Stress Value",
+    title = "Relationship Between Screentime, Perceived Stress Value,\nand Number of Tasks Due",
     x = "Stress Value",
     y = "Screentime (h)",
     color = "Tasks Due"
-  )
+  ) +
+  
+  scale_color_discrete_sequential(palette = "Sunset")
+
 
 ```
 
