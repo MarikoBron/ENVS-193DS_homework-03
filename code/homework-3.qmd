@@ -139,7 +139,13 @@ Because my study aims to measure correlations with screentime, a curiosity drive
 
 I did it on my iPad instead of on paper because I need colors and I only have highlighters. 
 
-![Screentime Sketch](data/sketch.jpg)
+![Screentime Sketch](sketch.jpg)
+
+```{r}
+
+knitr::include_graphics("sketch.jpg")
+
+```
 
 
 
