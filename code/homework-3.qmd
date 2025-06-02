@@ -32,7 +32,7 @@ I am adding together five quantitative variables to calculate my perceived daily
 
 ## b. Visualization
 
-```{creating a visualization}
+```{r cleaning data}
 
 screentime_clean <- screentime |>  #create object screentime_clean
   clean_names() |> 
@@ -45,37 +45,11 @@ screentime_clean <- screentime |>  #create object screentime_clean
         `8 - hours slept` = x8_number_hrs_slept,
         `stress value` = stress_value,
         `screentime(h)` = screen_time_h #renaming all of my columns
-         ) |> 
-  arrange(`screentime(h)`) #arrange by increasing screentime/dependant var to loo for patterns
+         ) 
 
-hcl_palettes() #downloading cute color palette just in case I need it
-hcl_palettes(plot = TRUE)
-
-ggplot(screentime_clean, 
-       aes(
-         x = `stress value`,
-         y = `screentime(h)`,
-         color = factor(`tasks due`)
-       )) + #create scatterplot to look for correlation between stress value and screentime (there is lowkey none)
-  geom_point(
-    fill = "honeydew", 
-    shape = 23,
-    alpha = 0.6,
-    size = 3.5,
-    stroke = 3 #make scatterplot cute
-  ) +
-  
-  labs(
-    title = "Relationship Between Screentime, Perceived Stress Value,\nand Number of Tasks Due",
-    x = "Stress Value",
-    y = "Screentime (h)",
-    color = "Tasks Due" #add labels, color by tasks due
-  ) +
-  
-  scale_color_discrete_sequential(palette = "SunsetDark") #choose color palette
 ```
 
-```{testing a different visualization}
+```{r Creating a Visualization}
 
 screentime_altered <- screentime_clean |> 
   mutate(`hours slept` = 8 - `8 - hours slept`) #make the hours slept variable less confusing because i am not using stress points in this version
@@ -90,7 +64,7 @@ ggplot(screentime_altered,
     fill = "honeydew", 
     shape = 23,
     alpha = 0.6,
-    size = 3.5,
+    size = 3,
     stroke = 3 #make scatterplot cute
   ) +
   
@@ -106,7 +80,7 @@ height = 0.15,
 width = 0,
 shape = 23,
 alpha = 0.6,
-size = 3.5, 
+size = 3, 
 stroke = 3) + #adding jitter because I realized half of my data is hidden
   
   scale_color_discrete_sequential(palette = "SunsetDark") #choose colors
@@ -130,8 +104,8 @@ screentime_cleaner <- screentime_altered[,c("tasks due", "hours slept", "screent
 
 set_flextable_defaults(
   border.color = "#f8a07e",
-  background.color = "#fff5b6",
-  font.color = "#a059a0" #making table match my plot
+  background.color = "#ffefc4",
+  font.color = "#a059a0" #making table's colorscheme match my plot
   )
 
 #create a table with the intended columns
@@ -151,13 +125,21 @@ screentime_cleaner_table <- flextable(
   ) 
 
 
-screentime_cleaner_table #view my object
+screentime_cleaner_table #view my table
 
 ```
 
-# Problem 2
+# Problem 2: Affective visualization
 
+## a. Describe in words what an affective visualization could look like for your personal data
 
+Because my study aims to measure correlations with screentime, a curiosity driven by my distress over extreme phone-driven procrastination, I want my background to be a phone. Maybe not the most creative, but I didn't see it in any of the example visualizations. I want to use self explanatory icons to represent my data. I'm thinking something along the lines of hours of sleep being represented by how dark it is outside, or by how tired a character looks. I think I will separate my data by hours of screentime instead of by day because I find the daily data point visualizations, like the "week of goodbyes" postcard, to be a bit disorienting. I am obsessed with the environmental graffiti, but it seems a bit beyond my scope right now. 
+
+## b. Sketch of my idea
+
+I did it on my iPad instead of on paper because I need colors and I only have highlighters. 
+
+![Screentime Sketch](data/sketch.jpg)
 
 
 
