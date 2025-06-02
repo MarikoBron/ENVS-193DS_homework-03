@@ -2,7 +2,10 @@
 title: "homework-3"
 date: 05-22-2025
 author: Mariko Bronson
-format: html
+format: 
+  html:
+    self-contained: false
+    resources: ["sketch.jpg"]
 ---
 
 https://github.com/MarikoBron/ENVS-193DS_homework-03.git
@@ -141,11 +144,7 @@ I did it on my iPad instead of on paper because I need colors and I only have hi
 
 ![Screentime Sketch](sketch.jpg)
 
-```{r}
 
-knitr::include_graphics("sketch.jpg")
-
-```
 
 
 
